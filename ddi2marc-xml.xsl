@@ -133,8 +133,7 @@ To use this file with Xalan-J, run something like this from the command line:
 
               <!-- Default: No information given -->
               <xsl:otherwise>
-                <!-- TODO: Get this space to show up. -->
-                <xsl:attribute name="ind1"> </xsl:attribute>
+                <xsl:attribute name="ind1"><xsl:text> </xsl:text></xsl:attribute>
               </xsl:otherwise>
 
             </xsl:choose>
