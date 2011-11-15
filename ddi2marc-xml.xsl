@@ -178,10 +178,9 @@ processor that supports EXSLT is pretty important.
 
     <!-- 00-05 - Date entered on file (the date the MARC record was created,
          so the date the XSLT is run) in YYMMDD format. -->
-
-    <xsl:variable name="packed-string" select="substring(ex:year(), 3, 2)"/>
-    <xsl:variable name="packed-string" select="concat($packed-string, ex:month-in-year())"/>
-    <xsl:variable name="packed-string" select="concat($packed-string, ex:day-in-month())"/>
+    <xsl:variable name="packed-string" select="format-number(substring(ex:year(), 3, 2), '00')"/>
+    <xsl:variable name="packed-string" select="concat(format-number($packed-string, ex:month-in-year()), '00')"/>
+    <xsl:variable name="packed-string" select="concat(format-number($packed-string, ex:day-in-month()), '00')"/>
 
     <!-- 06 - Type of date/Publication status -->
     <!-- e - Detailed date -->
