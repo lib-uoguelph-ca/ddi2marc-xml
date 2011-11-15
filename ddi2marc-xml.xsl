@@ -46,10 +46,16 @@ processor that supports EXSLT is pretty important.
   <xsl:template match="text()"/>
 
   <xsl:template match="/codeBook/stdyDscr">
+    <xsl:text>
+
+    </xsl:text>
     <xsl:comment>
       This file was automatically generated from DDI XML input using the
       ddi2marc-xml.xsl file from the University of Guelph Library.
     </xsl:comment>
+    <xsl:text>
+
+    </xsl:text>
     <collection xmlns="http://www.loc.gov/MARC21/slim">
       <record>
         <!-- TODO: Add all the header stuff -->
