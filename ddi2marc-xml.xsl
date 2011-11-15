@@ -24,6 +24,9 @@ To use this file with Xalan-J, run something like this from the command line:
     java -jar /path/to/xalan.jar -IN [DDI-XML file] \
         -XSL ddixml2marcxml.xsl -OUT [OUTPUT FILE]
 
+This stylesheet uses some Extended XSLT (EXSLT) tags, so using an XSLT
+processor that supports EXSLT is pretty important.
+
 =============================================================================
 
 -->
@@ -32,7 +35,9 @@ To use this file with Xalan-J, run something like this from the command line:
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:marc="http://www.loc.gov/MARC21/slim"
                 xmlns:xalan="http://xml.apache.org/xalan"
+                xmlns:ex="http://exslt.org/dates-and-times"
 
+                extension-element-prefixes="ex"
                 exclude-result-prefixes="marc xalan">
 
   <xsl:output method="xml" indent="yes" xalan:indent-amount="2"/>
@@ -48,6 +53,9 @@ To use this file with Xalan-J, run something like this from the command line:
     <collection xmlns="http://www.loc.gov/MARC21/slim">
       <record>
         <!-- TODO: Add all the header stuff -->
+        <controlfield tag="008">
+          <xsl:call-template name="tag008"/>
+        </controlfield>
 
         <!-- Title -->
         <!-- TODO: Figure out whether we can always use "0" for both indicators. -->
@@ -159,6 +167,48 @@ To use this file with Xalan-J, run something like this from the command line:
 
       </record>
     </collection>
+  </xsl:template>
+
+
+  <!-- Tag 008 is somewhat complex, with several pieces of data packed into a
+       single string. -->
+  <xsl:template name="tag008">
+
+    <!-- 00-05 - Date entered on file (the date the MARC record was created,
+         so the date the XSLT is run) in YYMMDD format. -->
+
+    <xsl:variable name="packed-string" select="substring(ex:year(), 3, 2)"/>
+    <xsl:variable name="packed-string" select="concat($packed-string, ex:month-in-year())"/>
+    <xsl:variable name="packed-string" select="concat($packed-string, ex:day-in-month())"/>
+
+    <!-- 06 - Type of date/Publication status -->
+    <!-- For now, just use 'b' to not include dates. -->
+    <xsl:variable name="packed-string" select="concat($packed-string, 'b')"/>
+
+    <!-- 07-10 - Date 1; 11-14 - Date 2 -->
+    <!-- Not including dates for now. -->
+    <xsl:variable name="packed-string" select="concat($packed-string, '        ')"/>
+
+    <!-- 15-17 - Place of publication, production, or execution -->
+    <!-- Not including this for now. -->
+    <xsl:variable name="packed-string" select="concat($packed-string, '|||')"/>
+
+    <!-- 18-34 - Medium-specific fields -->
+    <!-- Just use spaces for now. -->
+    <xsl:variable name="packed-string" select="concat($packed-string, '                 ')"/>
+
+    <!-- 35-37 - Language -->
+    <!-- Don't include this for now. -->
+    <xsl:variable name="packed-string" select="concat($packed-string, '|||')"/>
+
+    <!-- 38 - Modified record -->
+    <!-- 39 - Cataloging source -->
+    <!-- Use 'no attempt to code' for these. -->
+    <xsl:variable name="packed-string" select="concat($packed-string, '||')"/>
+
+    <!-- Spit the finalized string out. -->
+    <xsl:value-of select="$packed-string"/>
+
   </xsl:template>
 
 </xsl:stylesheet>
