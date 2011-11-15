@@ -62,6 +62,14 @@ To use this file with Xalan-J, run something like this from the command line:
           </xsl:if>
         </datafield>
 
+        <!-- Authors -->
+        <xsl:for-each select="/codeBook/docDscr/citation/rspStmt/AuthEnty">
+          <datafield tag="720" ind1=" " ind2=" ">
+            <subfield code="a"><xsl:value-of select="text()"/></subfield>
+            <subfield code="e">author</subfield>
+          </datafield>
+        </xsl:for-each>
+
         <!-- Publication and distribution -->
         <datafield ind1=" " ind2=" " tag="260">
 
