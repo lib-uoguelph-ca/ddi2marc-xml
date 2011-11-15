@@ -69,11 +69,11 @@ processor that supports EXSLT is pretty important.
         <!-- Title -->
         <datafield ind1="0" ind2="0" tag="245">
           <subfield code="a">
-            <xsl:value-of select="citation/titlStmt/titl"/>
+            <xsl:value-of select="normalize-space(citation/titlStmt/titl)"/>
           </subfield>
           <xsl:if test="citation/titleStmt/subTitle">
             <subfield code="b">
-              <xsl:value-of select="citation/titleStmt/subTitl"/>
+              <xsl:value-of select="normalize-space(citation/titleStmt/subTitl)"/>
             </subfield>
           </xsl:if>
         </datafield>
@@ -81,7 +81,7 @@ processor that supports EXSLT is pretty important.
         <!-- Authors -->
         <xsl:for-each select="/codeBook/docDscr/citation/rspStmt/AuthEnty">
           <datafield tag="720" ind1=" " ind2=" ">
-            <subfield code="a"><xsl:value-of select="text()"/></subfield>
+            <subfield code="a"><xsl:value-of select="normalize-space(text())"/></subfield>
             <subfield code="e">author</subfield>
           </datafield>
         </xsl:for-each>
@@ -90,13 +90,13 @@ processor that supports EXSLT is pretty important.
         <datafield ind1=" " ind2=" " tag="260">
 
           <subfield code="a">
-            <xsl:value-of select="/codeBook/docDscr/citation/prodStmt/prodPlac"/>
+            <xsl:value-of select="normalize-space(/codeBook/docDscr/citation/prodStmt/prodPlac)"/>
           </subfield>
           <subfield code="b">
-            <xsl:value-of select="/codeBook/docDscr/citation/prodStmt/producer"/>
+            <xsl:value-of select="normalize-space(/codeBook/docDscr/citation/prodStmt/producer)"/>
           </subfield>
           <subfield code="c">
-            <xsl:value-of select="/codeBook/docDscr/citation/prodStmt/prodDate"/>
+            <xsl:value-of select="normalize-space(/codeBook/docDscr/citation/prodStmt/prodDate)"/>
           </subfield>
         </datafield>
 
@@ -104,7 +104,7 @@ processor that supports EXSLT is pretty important.
         <!-- I'm going to assume that the abstract fits nicely here. -->
         <datafield ind1=" " ind2=" " tag="520">
           <subfield code="a">
-            <xsl:value-of select="stdyInfo/abstract"/>
+            <xsl:value-of select="normalize-space(stdyInfo/abstract)"/>
           </subfield>
         </datafield>
 
@@ -112,7 +112,7 @@ processor that supports EXSLT is pretty important.
         <xsl:for-each select="stdyInfo/subject/keyword">
           <datafield tag="653" ind1="0" ind2=" ">
             <subfield code="a">
-              <xsl:value-of select="text()"/>
+              <xsl:value-of select="normalize-space(text())"/>
             </subfield>
           </datafield>
         </xsl:for-each>
@@ -165,7 +165,7 @@ processor that supports EXSLT is pretty important.
               <xsl:value-of select="@URI"/>
             </subfield>
             <subfield code="y">
-              <xsl:value-of select="text()"/>
+              <xsl:value-of select="normalize-space(text())"/>
             </subfield>
             <subfield code="z">
               <xsl:value-of select="@location"/>
