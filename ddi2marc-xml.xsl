@@ -53,6 +53,9 @@ processor that supports EXSLT is pretty important.
     <collection xmlns="http://www.loc.gov/MARC21/slim">
       <record>
         <!-- TODO: Add all the header stuff -->
+        <controlfield tag="005">
+          <xsl:call-template name="tag005"/>
+        </controlfield>
         <controlfield tag="008">
           <xsl:call-template name="tag008"/>
         </controlfield>
@@ -167,6 +170,23 @@ processor that supports EXSLT is pretty important.
 
       </record>
     </collection>
+  </xsl:template>
+
+
+  <!-- Date and Time of Latest Transaction as YYYYMMDDHHMMSS.F in 24h time. -->
+  <!-- Using the current time. -->
+  <xsl:template name="tag005">
+    <xsl:variable name="timestamp" select="format-number(ex:year(), '0000')"/>
+    <xsl:variable name="timestamp" select="concat($timestamp, format-number(ex:month-in-year(), '00'))"/>
+    <xsl:variable name="timestamp" select="concat($timestamp, format-number(ex:day-in-month(), '00'))"/>
+    <xsl:variable name="timestamp" select="concat($timestamp, format-number(ex:hour-in-day(), '00'))"/>
+    <xsl:variable name="timestamp" select="concat($timestamp, format-number(ex:minute-in-hour(), '00'))"/>
+    <xsl:variable name="timestamp" select="concat($timestamp, format-number(ex:second-in-minute(), '00'))"/>
+
+    <!-- Can't find smaller-than-second granularity in XSLT. -->
+    <xsl:variable name="timestamp" select="concat($timestamp, '.0')"/>
+
+    <xsl:value-of select="$timestamp"/>
   </xsl:template>
 
 
