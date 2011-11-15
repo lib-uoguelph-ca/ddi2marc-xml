@@ -61,7 +61,6 @@ processor that supports EXSLT is pretty important.
         </controlfield>
 
         <!-- Title -->
-        <!-- TODO: Figure out whether we can always use "0" for both indicators. -->
         <datafield ind1="0" ind2="0" tag="245">
           <subfield code="a">
             <xsl:value-of select="citation/titlStmt/titl"/>
