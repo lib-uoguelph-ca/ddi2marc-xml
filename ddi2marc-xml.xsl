@@ -174,6 +174,8 @@ processor that supports EXSLT is pretty important.
        single string. -->
   <xsl:template name="tag008">
 
+    <xsl:variable name="prod-date" select="/codeBook/docDscr/citation/prodStmt/prodDate/@date"/>
+
     <!-- 00-05 - Date entered on file (the date the MARC record was created,
          so the date the XSLT is run) in YYMMDD format. -->
 
@@ -182,12 +184,13 @@ processor that supports EXSLT is pretty important.
     <xsl:variable name="packed-string" select="concat($packed-string, ex:day-in-month())"/>
 
     <!-- 06 - Type of date/Publication status -->
-    <!-- For now, just use 'b' to not include dates. -->
-    <xsl:variable name="packed-string" select="concat($packed-string, 'b')"/>
+    <!-- e - Detailed date -->
+    <xsl:variable name="packed-string" select="concat($packed-string, 'e')"/>
 
     <!-- 07-10 - Date 1; 11-14 - Date 2 -->
-    <!-- Not including dates for now. -->
-    <xsl:variable name="packed-string" select="concat($packed-string, '        ')"/>
+    <xsl:variable name="packed-string" select="concat($packed-string, format-number(ex:year(ex:date($prod-date)), '0000'))"/>
+    <xsl:variable name="packed-string" select="concat($packed-string, format-number(ex:month-in-year(ex:date($prod-date)), '00'))"/>
+    <xsl:variable name="packed-string" select="concat($packed-string, format-number(ex:day-in-month(ex:date($prod-date)), '00'))"/>
 
     <!-- 15-17 - Place of publication, production, or execution -->
     <!-- Not including this for now. -->
