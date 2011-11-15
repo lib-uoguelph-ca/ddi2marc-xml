@@ -22,7 +22,7 @@ Apache-licensed open source XSLT processor.
 To use this file with Xalan-J, run something like this from the command line:
 
     java -jar /path/to/xalan.jar -IN [DDI-XML file] \
-        -XSL ddixml2marcxml.xsl -OUT [OUTPUT FILE]
+        -XSL ddi2marc-xml.xsl -OUT [OUTPUT FILE]
 
 This stylesheet uses some Extended XSLT (EXSLT) tags, so using an XSLT
 processor that supports EXSLT is pretty important.
