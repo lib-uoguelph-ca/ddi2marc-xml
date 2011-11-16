@@ -58,7 +58,29 @@ processor that supports EXSLT is pretty important.
     </xsl:text>
     <collection xmlns="http://www.loc.gov/MARC21/slim">
       <record>
-        <!-- TODO: Add all the header stuff -->
+
+        <!--
+
+        Unfortunately there doesn't seem to be any clear documentation about
+        how the leader can be modified for MARCXML (in contrast to MARC). The
+        logical record length, for instance, really has no place in an XML
+        document and could be quite challenging to calculate.
+
+        The Dublin Core to MARCXML stylesheet located at
+
+            http://www.loc.gov/standards/marcxml/xslt/DC2MARC21slim.xsl
+
+        seems to indicate that this fixed-length field doesn't even need to
+        be fully provided. To be safe, I would prefer to generate a string of
+        the expected length.
+
+        It looks like this default value should work:
+
+            http://www.oclc.org/developer/documentation/worldcat-search-api/marc-xml-sample
+
+        -->
+        <leader><xsl:text>00000    a2200000   4500</xsl:text></leader>
+
         <controlfield tag="005">
           <xsl:call-template name="tag005"/>
         </controlfield>
